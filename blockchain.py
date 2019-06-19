@@ -84,7 +84,7 @@ class Blockchain(object):
 
         current_proof = 0
         while self.verify_proof(previous_proof, current_proof) is False:
-            proof += 1
+            current_proof += 1
 
         return current_proof
 
@@ -99,7 +99,9 @@ class Blockchain(object):
         """
 
         guess = f'{previous_proof}{proof}'.encode()
-        return hashlib.sha256(guess)[:4] == '0000'
+        hashed_guess = hashlib.sha256(guess).hexdigest()
+
+        return hashed_guess[:4] == '0000'
 
     def register_node(self, address):
         """
